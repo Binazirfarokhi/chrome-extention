@@ -1,7 +1,28 @@
-let myLeads = []
+let myLeads = `[]`
+// 1. Turn the myLeads string into an array
+myLeads = JSON.parse(myLeads)
+// 2. Push a new value to the array
+myLeads.push("www.lead2.com")
+// 3. Turn the array into a string again
+myLeads = JSON.stringify(myLeads)
+// 4. Console.log the string using typeof to verify that it's a string
+console.log(typeof myLeads)
+
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
+
+
+// we can set a value and key to  local storage by using : localstorage.setItem("key", "value")
+// we can get value the local storage by using : localStorage.getItem("key")
+// we can clear the local storage by using localStorage.clear()
+
+
+// localStorage.setItem("myLeades", "www.google.com")
+// let fname = localStorage.getItem("myNames");
+// console.log(fname)
+// localStorage.clear()
+
 
 inputBtn.addEventListener("click", function() {
     myLeads.push(inputEl.value)
@@ -17,3 +38,5 @@ function renderLeads() {
     }
     ulEl.innerHTML = listItems  
 }
+// localStorage can just save the strings if the number are exist use stringfy and parse()
+// so, if you want to save the array in an localstorage you might need to make it it the string by using back tick 
