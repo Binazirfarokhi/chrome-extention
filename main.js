@@ -1,4 +1,8 @@
-let myLeads = `["www.awsomelead.com"]`
+let myLeads = []
+
+const inputEl = document.getElementById("input-el")
+const inputBtn = document.getElementById("input-btn")
+const ulEl = document.getElementById("ul-el")
 // 1. Turn the myLeads string into an array
 // myLeads = JSON.parse(myLeads)
 // 2. Push a new value to the array
@@ -8,10 +12,22 @@ let myLeads = `["www.awsomelead.com"]`
 // myLeads=JSON.stringify(myLeads)
 // 4. Console.log the string using typeof to verify that it's a string
 // console.log(typeof myLeads)
+// 8888888888888888888888888888888888888888
+// get the leads from localstorage 
+ let outcome =  JSON.parse(localStorage.getItem("myLeads"))
+//  null means there is no value here, on purpose.
 
-const inputEl = document.getElementById("input-el")
-const inputBtn = document.getElementById("input-btn")
-const ulEl = document.getElementById("ul-el")
+ console.log(outcome)
+// 1. Check if leadsFromLocalStorage is truthy
+if(outcome){
+    // 2. If so, set myLeads to its value and call renderLeads
+  myLeads= outcome
+  renderLeads()
+   
+}
+
+
+
 
 
 // we can set a value and key to  local storage by using : localstorage.setItem("key", "value")
@@ -33,7 +49,12 @@ inputBtn.addEventListener("click", function() {
     myLeads.push(inputEl.value)
     // Clear out the input field
     inputEl.value = ""
+    // save the myleads array into a localstorage
+    let array = JSON.stringify(myLeads)
+    localStorage.setItem("myLeads", array)
+
     renderLeads()
+    console.log(localStorage.getItem("myLeads"))
 })
 
 function renderLeads() {
@@ -45,3 +66,11 @@ function renderLeads() {
 }
 // localStorage can just save the strings if the number are exist use stringfy and parse()
 // so, if you want to save the array in an localstorage you might need to make it it the string by using back tick 
+
+// falsy and truthy values: 
+// falsy : "" false 0 null undefiend NaN
+// null : developer itseld try to make it null
+// undefined : means it is empty
+// how to check truthy or falsy ? using boolean 
+// let trueOrFalsy = Boolean(-0)
+// console.log(trueOrFalsy)
