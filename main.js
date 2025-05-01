@@ -14,7 +14,7 @@ const ulEl = document.getElementById("ul-el")
 // console.log(typeof myLeads)
 // 8888888888888888888888888888888888888888
 // get the leads from localstorage 
- let outcome =  JSON.parse(localStorage.getItem("myLeads"))
+ const outcome =  JSON.parse(localStorage.getItem("myLeads"))
 //  null means there is no value here, on purpose.
 
  console.log(outcome)
