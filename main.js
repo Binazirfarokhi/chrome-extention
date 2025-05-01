@@ -14,14 +14,14 @@ const ulEl = document.getElementById("ul-el")
 // console.log(typeof myLeads)
 // 8888888888888888888888888888888888888888
 // get the leads from localstorage 
- const outcome =  JSON.parse(localStorage.getItem("myLeads"))
+ const leadsFromLocalStorage =  JSON.parse(localStorage.getItem("myLeads"))
 //  null means there is no value here, on purpose.
 
- console.log(outcome)
+ console.log(leadsFromLocalStorage)
 // 1. Check if leadsFromLocalStorage is truthy
-if(outcome){
+if(leadsFromLocalStorage){
     // 2. If so, set myLeads to its value and call renderLeads
-  myLeads= outcome
+  myLeads= leadsFromLocalStorage
   renderLeads()
    
 }
