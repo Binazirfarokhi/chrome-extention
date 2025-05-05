@@ -3,6 +3,7 @@ let myLeads = []
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
+const deletebtn = document.getElementById("delete-btn")
 // 1. Turn the myLeads string into an array
 // myLeads = JSON.parse(myLeads)
 // 2. Push a new value to the array
@@ -26,7 +27,12 @@ if(leadsFromLocalStorage){
    
 }
 
+// 2. Listen for double clicks on the delete button (google it!)
 
+deletebtn.addEventListener("dblclick",function(){
+    
+})
+// 3. When clicked, clear localStorage, myLeads, and the DOM
 
 
 
