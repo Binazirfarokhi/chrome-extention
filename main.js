@@ -1,5 +1,13 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"
+import { getDatabase } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js"
+const firebaseConfig = {
+databaseURL : "https://leads-tracker-app-a9b6d-default-rtdb.firebaseio.com/"
+  }
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  console.log(database)
 let myLeads = []
-let oldLeads =[]
+// let oldLeads =[]
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
@@ -18,7 +26,7 @@ const deletebtn = document.getElementById("delete-btn")
  const leadsFromLocalStorage =  JSON.parse(localStorage.getItem("myLeads"))
 //  null means there is no value here, on purpose.
 
- console.log(leadsFromLocalStorage)
+//  console.log(leadsFromLocalStorage)
 // 1. Check if leadsFromLocalStorage is truthy
 if(leadsFromLocalStorage){
     // 2. If so, set myLeads to its value and call renderLeads
@@ -83,13 +91,8 @@ function render(leads) {
 // let trueOrFalsy = Boolean(-0)
 // console.log(trueOrFalsy)
 // Create a function, getFirst(arr), that returns the first item in the array
-array= [12,3,4]
-function getFirst(array){
-    return array[0]
-}
 
-let variable  =getFirst([10,30,40])
-console.log(variable)
+
 // Call it with an array as an argument to verify that it works
 const tabbtn = document.getElementById("tab-btn")
 // save tab button work : 
