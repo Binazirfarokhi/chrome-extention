@@ -1,5 +1,5 @@
 let myLeads = []
-
+let oldLeads =[]
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
@@ -23,14 +23,16 @@ const deletebtn = document.getElementById("delete-btn")
 if(leadsFromLocalStorage){
     // 2. If so, set myLeads to its value and call renderLeads
   myLeads= leadsFromLocalStorage
-  renderLeads()
+  render(myLeads)
    
 }
 
 // 2. Listen for double clicks on the delete button (google it!)
 
 deletebtn.addEventListener("dblclick",function(){
-    
+localStorage.clear()
+myLeads = []
+render(myLeads)
 })
 // 3. When clicked, clear localStorage, myLeads, and the DOM
 
@@ -50,7 +52,7 @@ deletebtn.addEventListener("dblclick",function(){
 // localStorage only supports strings. Use JSON.stringify() and JSON.parse().
 // JSON.parse() is a method in JavaScript that converts a JSON string into a JavaScript object
 // JSON.stringify() do opposite, 
-
+// write parameters: pass varable into a function
 inputBtn.addEventListener("click", function() {
     myLeads.push(inputEl.value)
     // Clear out the input field
@@ -59,14 +61,14 @@ inputBtn.addEventListener("click", function() {
     let array = JSON.stringify(myLeads)
     localStorage.setItem("myLeads", array)
 
-    renderLeads()
+    render(myLeads)
     console.log(localStorage.getItem("myLeads"))
 })
 
-function renderLeads() {
+function render(leads) {
     let listItems = ""
-    for (let i = 0; i < myLeads.length; i++) {
-        listItems += `<li><a href="${myLeads[i]}" target='_blank'>${myLeads[i]}</li> `
+    for (let i = 0; i < leads.length; i++) {
+        listItems += `<li><a href="${leads[i]}" target='_blank'>${leads[i]}</li> `
     }
     ulEl.innerHTML = listItems  
 }
@@ -80,3 +82,28 @@ function renderLeads() {
 // how to check truthy or falsy ? using boolean 
 // let trueOrFalsy = Boolean(-0)
 // console.log(trueOrFalsy)
+// Create a function, getFirst(arr), that returns the first item in the array
+array= [12,3,4]
+function getFirst(array){
+    return array[0]
+}
+
+let variable  =getFirst([10,30,40])
+console.log(variable)
+// Call it with an array as an argument to verify that it works
+const tabbtn = document.getElementById("tab-btn")
+// save tab button work : 
+
+tabbtn.addEventListener("click", function(){
+    // grab the url of the current tab 
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      console.log(tabs)
+          // save the url on the local storage and ouput it 
+      myLeads.push(tabs[0].url)
+      localStorage.setItem("myleads", JSON.stringify(myLeads))
+      render(myLeads)
+    });
+
+   
+
+})
