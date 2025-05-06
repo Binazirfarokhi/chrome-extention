@@ -1,17 +1,30 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"
-import { getDatabase } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js"
+import { getDatabase ,ref, push , onValue } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js"
 const firebaseConfig = {
 databaseURL : "https://leads-tracker-app-a9b6d-default-rtdb.firebaseio.com/"
   }
   const app = initializeApp(firebaseConfig);
   const database = getDatabase(app);
+  const referenceInDB = ref(database, "Leads")
   console.log(database)
-let myLeads = []
+
 // let oldLeads =[]
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
 const deletebtn = document.getElementById("delete-btn")
+
+onValue(referenceInDB, function(snapshot){
+    const snapshotDOesExist = snapshot.exists()
+    if(snapshotDOesExist){
+        const snapshotvalue = snapshot.val()
+//    create a const that change the object into array
+const leads = Object.values(snapshotvalue)
+console.log(leads)
+render(leads)
+    }
+    
+})
 // 1. Turn the myLeads string into an array
 // myLeads = JSON.parse(myLeads)
 // 2. Push a new value to the array
@@ -23,24 +36,25 @@ const deletebtn = document.getElementById("delete-btn")
 // console.log(typeof myLeads)
 // 8888888888888888888888888888888888888888
 // get the leads from localstorage 
- const leadsFromLocalStorage =  JSON.parse(localStorage.getItem("myLeads"))
+//  const leadsFromLocalStorage =  JSON.parse(localStorage.getItem("myLeads"))
 //  null means there is no value here, on purpose.
 
 //  console.log(leadsFromLocalStorage)
 // 1. Check if leadsFromLocalStorage is truthy
-if(leadsFromLocalStorage){
-    // 2. If so, set myLeads to its value and call renderLeads
-  myLeads= leadsFromLocalStorage
-  render(myLeads)
+// if(leadsFromLocalStorage){
+//     // 2. If so, set myLeads to its value and call renderLeads
+//   myLeads= leadsFromLocalStorage
+//   render(myLeads)
    
-}
+// }
 
 // 2. Listen for double clicks on the delete button (google it!)
 
 deletebtn.addEventListener("dblclick",function(){
-localStorage.clear()
-myLeads = []
-render(myLeads)
+remove(referenceInDB)
+ulEl.innerHTML  = ""
+
+
 })
 // 3. When clicked, clear localStorage, myLeads, and the DOM
 
@@ -62,15 +76,15 @@ render(myLeads)
 // JSON.stringify() do opposite, 
 // write parameters: pass varable into a function
 inputBtn.addEventListener("click", function() {
-    myLeads.push(inputEl.value)
+  push(referenceInDB, inputEl.value)
     // Clear out the input field
     inputEl.value = ""
     // save the myleads array into a localstorage
-    let array = JSON.stringify(myLeads)
-    localStorage.setItem("myLeads", array)
+    // let array = JSON.stringify(myLeads)
+    // localStorage.setItem("myLeads", array)
 
-    render(myLeads)
-    console.log(localStorage.getItem("myLeads"))
+  
+    // console.log(localStorage.getItem("myLeads"))
 })
 
 function render(leads) {
@@ -94,19 +108,20 @@ function render(leads) {
 
 
 // Call it with an array as an argument to verify that it works
-const tabbtn = document.getElementById("tab-btn")
+// const tabbtn = document.getElementById("tab-btn")
 // save tab button work : 
 
-tabbtn.addEventListener("click", function(){
-    // grab the url of the current tab 
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      console.log(tabs)
-          // save the url on the local storage and ouput it 
-      myLeads.push(tabs[0].url)
-      localStorage.setItem("myleads", JSON.stringify(myLeads))
-      render(myLeads)
-    });
+// tabbtn.addEventListener("click", function(){
+//     // grab the url of the current tab 
+//     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+//       console.log(tabs)
+//           // save the url on the local storage and ouput it 
+//       myLeads.push(tabs[0].url)
+//       localStorage.setItem("myleads", JSON.stringify(myLeads))
+//       render(myLeads)
+//     });
 
    
 
-})
+// })
+// snapshot listen for update on data 
